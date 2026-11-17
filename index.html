@@ -63,8 +63,11 @@ function draw() {
   ctx.font = 'bold 8px Arial';
   ctx.fillStyle = '#ffb6c1';
   for (const p of points) {
-    ctx.fillText('I love you', offsetX + p.x * scale, offsetY - p.y * scale);
-  }
+    ctx.fillText(
+    'I love you',
+    offsetX + p.x * scale,
+    offsetY - p.y * scale
+);
 }
 build();
 window.addEventListener('resize', resize);
