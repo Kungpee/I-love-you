@@ -36,7 +36,7 @@ function resize() {
   canvas.width = w * dpr; canvas.height = h * dpr;
   canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  scale = Math.min(w / 38, h / 34, 18);
+  scale = Math.min(w / 560, h / 590);
   offsetX = w / 2; offsetY = h / 2 + 2;
   draw();
 }
