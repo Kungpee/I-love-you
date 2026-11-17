@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>I Love You ❤️</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; width: 100%; min-height: 100%;
+    background: #000; overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  body { display: grid; place-items: center; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+  .hint {
+    position: fixed; bottom: max(18px, env(safe-area-inset-bottom));
+    left: 0; right: 0; text-align: center;
+    color: #ffb6c1; opacity: .7; font-size: 13px;
+    letter-spacing: 1px; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="heart"></canvas>
+<div class="hint">Made with love ❤️</div>
+<script>
+const canvas = document.getElementById('heart');
+const ctx = canvas.getContext('2d');
+let w, h, dpr, points = [], scale = 1, offsetX = 0, offsetY = 0;
+
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  w = window.innerWidth; h = window.innerHeight;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  scale = Math.min(w / 38, h / 34, 18);
+  offsetX = w / 2; offsetY = h / 2 + 2;
+  draw();
+}
+function heart(t) {
+  return {
+    x: 16 * Math.sin(t) ** 3,
+    y: 13 * Math.cos(t) - 5 * Math.cos(2*t)
+       - 2 * Math.cos(3*t) - Math.cos(4*t)
+  };
+}
+function build() {
+  points = [];
+  for (let s = 11; s <= 16; s++) {
+    for (let i = 0; i < 120; i++) {
+      const p = heart(i * Math.PI * 2 / 120);
+      points.push({x: p.x * s, y: p.y * s});
+    }
+  }
+}
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = 'bold 8px Arial';
+  ctx.fillStyle = '#ffb6c1';
+  for (const p of points) {
+    ctx.fillText('I love you', offsetX + p.x * scale, offsetY - p.y * scale);
+  }
+}
+build();
+window.addEventListener('resize', resize);
+resize();
+</script>
+</body>
+</html>
